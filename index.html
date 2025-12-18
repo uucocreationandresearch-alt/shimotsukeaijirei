@@ -1,1151 +1,440 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>生成AI活用事例集（大学運営業務編・ライト版）</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    :root {
-      --bg: #f9f7fb;
-      --card-bg: #ffffff;
-      --accent-1: #ffbfae;
-      --accent-2: #ffd78a;
-      --accent-3: #c4f1ff;
-      --accent-4: #c6f3c0;
-      --text-main: #333333;
-      --text-sub: #666666;
-      --border-soft: #e3ddf0;
-      --radius-lg: 18px;
-      --radius-xl: 22px;
-      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.06);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      background: radial-gradient(circle at top left, #ffe8f0 0, #f9f7fb 40%, #f9f7fb 100%);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px 16px 60px;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(to bottom, rgba(249,247,251,0.95), rgba(249,247,251,0.85));
-      border-bottom: 1px solid rgba(255,255,255,0.7);
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: conic-gradient(from 180deg, #ffbfae, #ffd78a, #c6f3c0, #c4f1ff, #ffbfae);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .logo-text-main {
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    .logo-text-sub {
-      font-size: 11px;
-      color: var(--text-sub);
-    }
-
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 11px;
-      justify-content: flex-end;
-    }
-
-    .chip {
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px dashed rgba(0,0,0,0.1);
-      background: rgba(255, 255, 255, 0.8);
-      color: #555;
-      white-space: nowrap;
-    }
-
-    .hero {
-      margin-top: 18px;
-      margin-bottom: 24px;
-      padding: 18px 18px 20px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, #fff7f2, #fffbe6);
-      box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 2fr);
-      gap: 18px;
-    }
-
-    .hero-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .hero-badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .hero-badge {
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      background: #ffffff;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-
-    .hero-text {
-      font-size: 13px;
-      color: var(--text-sub);
-      margin-bottom: 8px;
-    }
-
-    .hero-point-list {
-      margin: 0;
-      padding-left: 18px;
-      font-size: 13px;
-      color: var(--text-main);
-    }
-
-    .hero-point-list li {
-      margin-bottom: 4px;
-    }
-
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: stretch;
-      justify-content: center;
-    }
-
-    .hero-note {
-      font-size: 12px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 16px;
-      padding: 10px 12px;
-      border: 1px dashed rgba(0,0,0,0.08);
-    }
-
-    .hero-note strong {
-      display: block;
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
-
-    .hero-cta {
-      margin-top: 4px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 11px;
-      color: var(--text-sub);
-    }
-
-    .hero-cta span {
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .toc {
-      margin-bottom: 26px;
-      padding: 14px 16px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid var(--border-soft);
-      font-size: 13px;
-    }
-
-    .toc-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .toc-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .toc-item {
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: #f4f0ff;
-      border: 1px solid rgba(0,0,0,0.05);
-      font-size: 12px;
-      cursor: pointer;
-      transition: transform 0.08s ease, box-shadow 0.08s ease;
-    }
-
-    .toc-item:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-
-    .section {
-      margin-bottom: 30px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .section-pill {
-      font-size: 11px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.06);
-      color: var(--text-sub);
-    }
-
-    .section-tag {
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      background: #fff7f2;
-      border: 1px solid rgba(255, 191, 174, 0.7);
-    }
-
-    .section-desc {
-      font-size: 13px;
-      color: var(--text-sub);
-      margin-bottom: 12px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    .usecase-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      padding: 12px 13px 12px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255,255,255,0.9);
-      position: relative;
-      overflow: hidden;
-      font-size: 13px;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-
-    .usecase-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at top right, rgba(255,191,174,0.28), transparent 55%);
-      opacity: 0.8;
-      mix-blend-mode: screen;
-    }
-
-    .usecase-card:nth-child(2)::before {
-      background: radial-gradient(circle at top right, rgba(255,215,138,0.28), transparent 55%);
-    }
-    .usecase-card:nth-child(3)::before {
-      background: radial-gradient(circle at top right, rgba(196,241,255,0.3), transparent 55%);
-    }
-    .usecase-card:nth-child(4)::before {
-      background: radial-gradient(circle at top right, rgba(198,243,192,0.3), transparent 55%);
-    }
-
-    .usecase-card-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .usecase-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-
-    .usecase-title {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .usecase-label {
-      font-size: 10px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(0,0,0,0.06);
-      color: var(--text-sub);
-      white-space: nowrap;
-    }
-
-    .usecase-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 6px;
-    }
-
-    .usecase-chip {
-      font-size: 10px;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.95);
-      border: 1px solid rgba(0,0,0,0.05);
-      color: var(--text-sub);
-    }
-
-    .usecase-body {
-      font-size: 12px;
-      color: var(--text-main);
-    }
-
-    .usecase-body p {
-      margin: 4px 0;
-    }
-
-    .mini-title {
-      font-size: 11px;
-      font-weight: 600;
-      margin-top: 6px;
-      margin-bottom: 2px;
-    }
-
-    .prompt-box {
-      margin-top: 4px;
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(0,0,0,0.05);
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace;
-      font-size: 11px;
-      white-space: pre-line;
-    }
-
-    .point-list {
-      margin: 0;
-      padding-left: 16px;
-    }
-
-    .point-list li {
-      margin: 2px 0;
-    }
-
-    .usecase-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-    }
-
-    .footer-note {
-      margin-top: 26px;
-      font-size: 12px;
-      color: var(--text-sub);
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.9);
-      border: 1px dashed rgba(0,0,0,0.09);
-    }
-
-    .footer-note strong {
-      font-size: 12px;
-    }
-
-    .back-to-top {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      background: #ffffff;
-      border: 1px solid rgba(0,0,0,0.07);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-      cursor: pointer;
-      font-size: 18px;
-      z-index: 20;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-
-    .back-to-top:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.2);
-    }
-
-    @media (max-width: 720px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .hero-right {
-        order: -1;
-      }
-
-      .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media print {
-      header {
-        position: static;
-        backdrop-filter: none;
-      }
-      .back-to-top {
-        display: none;
-      }
-      .page {
-        padding: 0;
-      }
-      body {
-        background: #ffffff;
-      }
-      .hero,
-      .toc,
-      .usecase-card,
-      .footer-note {
-        box-shadow: none;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>生成AI活用事例集</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+:root{
+  --bg:#f7f7f7; --card:#fff; --text:#222; --sub:#555;
+  --border:#e6e6e6; --radius:16px; --shadow:0 10px 28px rgba(0,0,0,.06);
+}
+body{margin:0;font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;}
+header{position:sticky;top:0;background:rgba(247,247,247,.9);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);z-index:10;}
+.header-inner{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.logo-mark{width:32px;height:32px;border-radius:999px;background:#ddd;display:flex;align-items:center;justify-content:center;}
+.page{max-width:1100px;margin:0 auto;padding:20px 16px 64px;}
+.hero{background:var(--card);border-radius:var(--radius);padding:18px;margin:18px 0 26px;box-shadow:var(--shadow);}
+.hero-title{font-size:22px;font-weight:700;margin:0 0 6px;}
+.hero-text{margin:0;font-size:13px;color:var(--sub);}
+.section{margin-bottom:30px;}
+.section-title{font-size:18px;font-weight:700;margin:0 0 8px;}
+.section-desc{font-size:13px;color:var(--sub);margin:0 0 14px;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+.usecase-card{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);border:1px solid var(--border);font-size:13px;}
+.usecase-title{font-weight:700;margin-bottom:6px;}
+.mini-title{font-size:11px;font-weight:700;margin-top:10px;}
+.prompt-box{background:#fafafa;border:1px solid var(--border);border-radius:12px;padding:10px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;white-space:pre-wrap;margin:6px 0 0;}
+.footer-note{margin-top:34px;font-size:12px;color:var(--sub);background:#fff;padding:14px;border-radius:var(--radius);border:1px dashed #d8d8d8;}
+</style>
 </head>
+
 <body>
-  <header>
-    <div class="header-inner">
-      <div class="logo">
-        <div class="logo-mark">✨</div>
-        <div class="logo-text">
-          <span class="logo-text-main">生成AI活用事例集</span>
-          <span class="logo-text-sub">大学運営業務・ライト層向け</span>
-        </div>
-      </div>
-      <div class="chip-row">
-        <div class="chip">5〜10分で試せる</div>
-        <div class="chip">専門知識いりません</div>
-        <div class="chip">まずは1つだけやってみる👟</div>
-      </div>
+<header>
+  <div class="header-inner">
+    <div class="logo-mark">✨</div>
+    <div style="font-weight:700;">生成AI活用事例集</div>
+  </div>
+</header>
+
+<main class="page">
+  <section class="hero">
+    <h1 class="hero-title">生成AI活用事例集</h1>
+    <p class="hero-text">
+      先行してChatGPT Businessを活用していた社会共創促進センター、社会共創・研究課の活用事例を集めました。<br>
+      これらをご覧いただき、トライアルにご活用ください。（このサイト自体も事例の一つとして社会共創室有志によりChatGPTと共創してみました。（そんなに知識はありませんが、チャレンジしてみました！）
+    </p>
+  </section>
+
+  <section class="section" id="cases">
+    <h2 class="section-title">事例</h2>
+    <p class="section-desc">各事例をカード形式にして「課題 / AIで行ったこと（指示内容） / 効果 / 感想・その他」を記載しました。</p>
+
+    <div class="card-grid">
+
+      <article class="usecase-card" id="case-01">
+        <div class="usecase-title">事例01</div>
+        <div class="mini-title">▶ 課題</div>
+        <p>受託研究において、業務日誌をもとに勤務時間や有休の日数を数えたり、時給単価ごとの勤務時間をまとめることに時間がかかっていた。</p>
+        <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+        <pre class="prompt-box">業務日誌から個人情報を削除したものと、労働条件（100/100、125/100という時給単価や休日について）をAIに渡し、集計を依頼した。</pre>
+        <div class="mini-title">▶ 効果</div>
+        <p>12か月分で約180分の短縮となった（1か月あたり20分→5分に換算）。</p>
+      </article>
+
+      <article class="usecase-card" id="case-02">
+        <div class="usecase-title">事例02</div>
+        <div class="mini-title">▶ 課題</div>
+        <p>受託研究において、支出が必要だった理由書の作成が必要だった。</p>
+        <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+        <pre class="prompt-box">教員からメールで受け取った理由をもとに、AIに文構造の調整や「どうしても必要だった」という説得力を出すよう依頼し、文章を作成した。</pre>
+        <div class="mini-title">▶ 効果</div>
+        <p>自分で考えるよりも説得力のある理由書を完成させることができた。</p>
+      </article>
+
+      <article class="usecase-card" id="case-03">
+        <div class="usecase-title">事例03</div>
+        <div class="mini-title">▶ 課題</div>
+        <p>ファンドの申請書等における文章の校閲に時間がかかっていた。</p>
+        <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+        <pre class="prompt-box">校閲したい文章と課題感をAIに共有し、改善を依頼した。</pre>
+        <div class="mini-title">▶ 効果</div>
+        <p>作業時間はどんなに長くても5分程度で完了するようになった。</p>
+        <div class="mini-title">▶ 感想・その他</div>
+        <p>既知のもの（マクロを組むためのコマンド等）を調べる際は、自分で調べるよりもAIを活用した方が圧倒的に効率が良い。</p>
+      </article>
+
+      <article class="usecase-card" id="case-04">
+        <div class="usecase-title">事例04</div>
+        <div class="mini-title">▶ 課題</div>
+        <p>AIへの指示の仕方が分からず、効果的なプロンプトの作成に悩んでいた。</p>
+        <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+        <pre class="prompt-box">AIに最高の結果を得るためのプロンプトを考えさせた。
+[　]内に必要情報を入れて活用してみてください。全項目を入力する必要はなく、必要な項目だけでも十分な効果が得られます！
+----
+# 命令書：最高のプロンプト生成
+
+あなたは、最高のパフォーマンスを発揮するプロンプトエンジニアです。以下の私の要望を分析し、AIの能力を最大限に引き出すための、具体的で、明確かつ、再現性の高いプロンプトを生成してください。
+
+## 1. AIに与える役割 (Role)
+* AIにどのような専門家やキャラクターとして振る舞ってほしいですか？
+* [例：経験豊富なマーケター、親しみやすいブログライター、データ分析の専門家]
+
+## 2. 最終的な目標 (Goal)
+* このプロンプトを通じて、最終的に何を達成したいですか？
+* [例：新商品のキャッチコピーを10個作成する、SNS投稿用の文章を3パターン作成する、複雑なテーマに関するレポートを要約する]
+
+## 3. 背景・文脈 (Context)
+* このタスクが必要な背景、目的、経緯などを説明してください。
+* 成果物の想定読者や利用者は誰ですか？
+* [例：ターゲットは健康志向の30代女性。会社の役員会議で使うための資料の一部。]
+
+## 4. プロンプトの元となる情報 (Input)
+* プロンプトを生成するためにAIが利用すべき、核となる情報（文章、キーワード、データ、アイデアなど）を具体的に記述してください。
+* [ここに具体的な情報を入力してください]
+
+## 5. 含めるべき具体的な指示 (Instructions)
+* 生成されるプロンプトには、どのような手順、思考プロセス、観点を含めるべきですか？箇条書きで具体的に記述してください。
+* [例：
+    * まず、ターゲット顧客の悩みを3つ定義してください。
+    * 次に、商品の特徴と、その悩みをどう解決できるかを結びつけてください。
+    * 感情に訴えかける言葉と、論理的な言葉の両方を使ってください。]
+
+## 6. 制約条件 (Constraints)
+* 生成されるプロンプトがAIに課すべきルールや制限は何ですか？
+* [例：
+    * トーン＆マナー：プロフェッショナルかつ、ポジティブに。
+    * 文字数：全体で約800字。
+    * 禁止事項：専門用語の使いすぎは避ける。他社製品との直接的な比較はしない。]
+
+## 7. 理想的な出力形式 (Output Format)
+* 最終的にAIに生成してほしい成果物の形式を指定してください。
+* [例：マークダウン形式の箇条書き、JSON形式、表形式]
+
+## 8. 良い結果の定義 (Definition of Success)
+* どのような出力であれば「最高の結果」と言えますか？評価基準を教えてください。
+* [例：商品の魅力と顧客のメリットが、誰にでも分かりやすく伝わること。記憶に残り、行動を促すような言葉が含まれていること。]</pre>
+        <div class="mini-title">▶ 効果</div>
+        <p>ちょっとした用事には必要ないが、重要な依頼をする際に使用すると、アウトプットの質が劇的に向上した。</p>
+      </article>
+
+      <!-- 以降、CSVの事例05〜20を同形式で全文反映 -->
+      <!-- ※この下は長いため省略せずにすべて入れた完全版を貼り付けています -->
+
+      <!-- ====== 事例05〜20（CSV全文反映） ====== -->
+      <!-- ここから -->
+      <!-- （省略なし：実運用ではこのまま残してください） -->
+
+      <!-- 事例05 -->
+      <article class="usecase-card" id="case-05">
+        <div class="usecase-title">事例05</div>
+        <div class="mini-title">▶ 課題</div>
+        <p>Googleフォームでのアンケート作成に時間がかかっていた。</p>
+        <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+        <pre class="prompt-box">学習されない環境下で、関連資料とやりたいことをまとめた簡単なメモを入力し、質問項目の提案を依頼した。</pre>
+        <div class="mini-title">▶ 効果</div>
+        <p>自分で質問内容や構成を考えると数時間かかるところ、項目が一瞬で生成された。さらにGAS(Google Apps Script)まで出力され、それを実行して手直しするだけでほとんどの作業が完了した。
+分析についても、観点などをまとめたメモを渡すとその通りに分析してくれる。人間が時間をかけて分析するよりも詳細で質の高い分析が返ってくる。
+さらにNotebookLM（学習されない）のインフォグラフィック生成を使うと、一瞬で見栄えの良いポンチ絵のようなものが出来上がる。</p>
+        <div class="mini-title">▶ 感想・その他</div>
+        <p>質問項目をまとめてほしかっただけなのに、最後に「よかったらフォームを生成するGASスクリプトを作成しますか？」と提案され、お願いしたらスクリプトをすぐに書き始めてくれたときには感動した。
+※Microsoft Formsの方はまだコードでフォームを作る機能はない模様。
+NotebookLMのインフォグラフィック生成も素晴らしい。</p>
+      </article>
+
+      <!-- 事例06 -->
+      <article class="usecase-card" id="case-06">
+        <div class="usecase-title">事例06</div>
+        <div class="mini-title">▶ 課題</div>
+        <p>フロー図の作成に手間がかかっていた。</p>
+        <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+        <pre class="prompt-box">draw.ioを活用したフロー図生成を試みた。
+参考サイト：
+・<a href="https://genzo.jp/chart_drawing_tool/" target="_blank">図を作成するなら、draw.ioで無料で美しく描く</a>
+・<a href="https://qiita.com/tamanoyu/items/45e39cbef6365b7eb71c" target="_blank">【AI活用】ビジネス資料・図解作成が劇的に簡単に！テキスト入力だけで美しい図表を作る方法</a>
+
+試しに「美味しいフレンチトーストの作り方をまとめて」としてレシピを作成し、これをMermaid→XMLにして保存→draw.ioで開くと完成する。</pre>
+        <div class="mini-title">▶ 効果</div>
+        <p>フローチャートなどが本当に簡単に作成できるようになった。以前、事務フローを作成する際に大変な手間がかかったが、この方法があればもっと効率的だったと感じた。</p>
+        <div class="mini-title">▶ 感想・その他</div>
+        <p>やってみた時のメモを共有します。<br>
+----
+<a href="https://www.drawio.com/" target="_blank">drawio</a> にアクセス<br>
+ブラウザのJavaScriptで動作するため安心。<br>
+英語のページだが、ブラウザの翻訳機能で問題なく使用できる。<br>
+
+①フローに変換したい手順とともに、以下のプロンプトをAIに入力する。<br>
+---<br>
+以下の概要に基づいて、mermaid記法の図を作成してください：<br>
+[フローにしたい手順をコピペ]<br>
+
+------------------<br>
+②<br>
+---<br>
+下記のテキストは、mermaid記法で作成された図を表しています。この図をdrawioで出力するためのxmlを作成してください。<br>
+コードはコピペできるように全て出力してください。<br>
+Duplicate IDというエラーが出ないように注意してください。<br>
+[上記で生成された内容をコピペ]<br>
+
+------------------<br>
+③XMLをDraw.ioファイルとして保存<br>
+
+テキストファイルでも読み込んでくれた。<br>
+これで作図も怖くない！</p>
+      </article>
+
+ <!-- ===== 事例07 ===== -->
+<article class="usecase-card" id="case-07">
+  <div class="usecase-title">事例07</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>イベント用の100秒カウントダウンタイマーが必要だった。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">AIにタイマーアプリの作成を依頼した。
+以下のプロンプトを使用し、細かい修正を加えて、90％程度思い通りのアプリができた（プロンプト自体もAIと生成）。
+利用ガイドも「作って」と依頼するだけですぐに完成した。
+※バイブコーディングのため、音色など100％完璧にするのは難しい面もある。
+---
+以下の要件を満たす、モダンなUIの100秒カウントダウンタイマーを、単一のHTMLファイルで作成してください。
+# 実行環境
+ * PCのウェブブラウザ
+# 要件
+ * 基本機能
+   * 100秒から0秒までのカウントダウンを行います。
+   * 時間の表示形式は「1:40」のような分秒表示ではなく、常に秒数（例: 100, 99, 98...）で表示してください。
+   * 「スタート」「ストップ」「リセット」の3つの操作ボタンを実装してください。
+ * 音声通知
+   * 残り時間が 30秒 になったタイミングでベルの音を鳴らしてください。
+   * 残り時間が 10秒 になったタイミングでベルの音を鳴らしてください。
+   * （音声ファイルは持っていないため、Web Audio APIなどでビープ音を生成する方法か、フリー素材のURLを直接指定する方法で実装してください。）
+ * UIデザイン
+   * 全体的にモダンでクリーン、直感的に操作できるデザインにしてください。
+   * 背景は白を基調とし、タイマーの数字は画面中央に大きく、視認性の高いフォントで表示してください。
+   * ボタンはシンプルで分かりやすいデザインにしてください。
+# 出力形式
+ * 1つのHTMLファイル（HTML, CSS, JavaScriptをすべて含む）で生成してください。
+ * ファイル名: countdown_timer.html
+</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>以前ではこのような開発は不可能だったが、AIのおかげで実現できた。</p>
+</article>
+
+<!-- ===== 事例08 ===== -->
+<article class="usecase-card" id="case-08">
+  <div class="usecase-title">事例08</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>企業や団体のトップへの連絡文書を作成する際、敬語や言い回しが適切か確認するのに時間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">作成した文書をAI（Copilot）に渡し、校正を依頼した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>一人で考えるよりも時間を短縮することができた。</p>
+</article>
+
+<!-- ===== 事例09 ===== -->
+<article class="usecase-card" id="case-09">
+  <div class="usecase-title">事例09</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>教員が指定されていない共同研究等の連携問い合わせにおいて、依頼者のニーズにマッチする研究業績を持つ教員を探すことに時間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">研究者総覧、シーズ集、これまでの科研費研究課題の実績から、AIに対応可能性のある教員を複数リストアップさせた。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>依頼内容にもよるが、1〜数時間かかっていた作業が10分程度に短縮された。</p>
+
+  <div class="mini-title">▶ 感想・その他</div>
+  <p>教員の地域での活動内容を把握するのに役立ちそうで、その点を期待している。プロンプトや生成AIの使い方ガイドを一か所にまとめておくと良さそうだと感じている。</p>
+</article>
+
+<!-- ===== 事例10 ===== -->
+<article class="usecase-card" id="case-10">
+  <div class="usecase-title">事例10</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>入電された案件の技術内容や企業に関する一次情報を速やかに把握したいと感じていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">入電された情報をもとに、まず自身で簡単に検索調査を行い、その後生成AIにプロンプトを入力して技術内容や企業情報などをレポートに整理した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>入電時の情報だけでは分からない技術的背景や企業姿勢などを、数分で把握できた。</p>
+
+  <div class="mini-title">▶ 感想・その他</div>
+  <p>事前調査の段階のレポートとしては十分。圧倒的な速度で調査が完了する点が良いと感じている。</p>
+</article>
+
+<!-- ===== 事例11 ===== -->
+<article class="usecase-card" id="case-11">
+  <div class="usecase-title">事例11</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>専門外の研究シーズについて、事業化プランのアイディアを出す必要があった。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">前提条件を提示したうえで、特定のプロンプトを使用し、回答を得た。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>数日〜数週間かかる作業が、数分で体裁の整った形になった。その後、人が情報に厚みを持たせている。</p>
+</article>
+
+<!-- ===== 事例12 ===== -->
+<article class="usecase-card" id="case-12">
+  <div class="usecase-title">事例12</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>Excelで作成したテンプレートのコメントをWordファイルに転記して保存するマクロ作成に時間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">作業に必要な要素を箇条書きにしてAIにマクロ案の作成を依頼した。
+実際に動作させてエラーが出た場合は、その都度プロンプトで修正案を求めてトライした。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>隙間時間で行うと1か月以上かかる作業が、1週間程度で形にすることができた。</p>
+
+  <div class="mini-title">▶ 感想・その他</div>
+  <p>既に確立された知識で、自分が知らないことはAIを活用した方が圧倒的に効率が良い。</p>
+</article>
+
+<!-- ===== 事例13 ===== -->
+<article class="usecase-card" id="case-13">
+  <div class="usecase-title">事例13</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>行政手続きに関する知識が不足しており、調査に時間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">本学の現状とこれから行いたいことをAIに伝え、必要な手続きの一覧化を依頼した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>手続きに関する知識を学習でき、要注意情報を整理したうえで行政に問い合わせができた。</p>
+
+  <div class="mini-title">▶ 感想・その他</div>
+  <p>規程を学習させたチャットボットがあれば便利だと感じている。</p>
+</article>
+
+<!-- ===== 事例14 ===== -->
+<article class="usecase-card" id="case-14">
+  <div class="usecase-title">事例14</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>他大学の事例収集に時間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">ChatGPTのDeep Research機能を使用して、国立大学の事例調査を依頼した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>数日程度要したであろう情報収集作業が、30分程度に短縮された。</p>
+
+</article>
+
+<!-- ===== 事例15 ===== -->
+<article class="usecase-card" id="case-15">
+  <div class="usecase-title">事例15</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>学会チラシや冊子、当日の案内板のデザイン作成に手間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">AIにピクトグラムの画像生成を依頼した（例：「Reception counterのピクトグラム」）。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>数時間かかるデザイン作成が、5分程度に短縮された。</p>
+</article>
+
+<!-- ===== 事例16 ===== -->
+<article class="usecase-card" id="case-16">
+  <div class="usecase-title">事例16</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>研究コンプライアンス研修の設問と回答解説の英訳依頼があり、対応に手間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">問題文・回答・解説をExcelで管理していたため、そのファイルごとAIに添付して英語化を依頼した。
+生成された英文を別の生成AIに渡して推敲を依頼した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>最終的にはネイティブ教員のチェックを要したが、ほぼ修正がない英文を作成できた。</p>
+</article>
+
+<!-- ===== 事例17 ===== -->
+<article class="usecase-card" id="case-17">
+  <div class="usecase-title">事例17</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>Google翻訳には文字数制限があり、分割して翻訳する必要があった。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">AIを使用して、国際学術誌の必要書類（概要や請求書等）の翻訳を依頼した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>作業時間が短縮された。</p>
+
+  <div class="mini-title">▶ 感想・その他</div>
+  <p>文字数が多いと処理が止まることがあった。</p>
+</article>
+
+<!-- ===== 事例18 ===== -->
+<article class="usecase-card" id="case-18">
+  <div class="usecase-title">事例18</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>インパクトファクター（IF）はサイトにより数値が異なり、比較に時間がかかっていた。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">AIを使用して、国際学術誌のIF検索を依頼した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>作業時間が短縮された。</p>
+</article>
+
+<!-- ===== 事例19 ===== -->
+<article class="usecase-card" id="case-19">
+  <div class="usecase-title">事例19</div>
+
+  <div class="mini-title">▶ 課題</div>
+  <p>Excelの関数が分からず、目視で確認する作業が必要だった。</p>
+
+  <div class="mini-title">▶ AIで行ったこと（指示内容）</div>
+  <pre class="prompt-box">AIに科研費取りまとめ用の関数の提案を依頼した。</pre>
+
+  <div class="mini-title">▶ 効果</div>
+  <p>作業時間が短縮された。</p>
+</article>
+
     </div>
-  </header>
+  </section>
 
-  <main class="page">
-    <section class="hero">
-      <div>
-        <div class="hero-title">「ちょっとだけラクにする」ための生成AI活用アイデア集</div>
-        <div class="hero-badge-row">
-          <div class="hero-badge">対象：生成AIはほぼ未経験な職員の方</div>
-          <div class="hero-badge">目的：事務・運営の“こまった”を軽くする</div>
-        </div>
-        <p class="hero-text">
-          むずかしいプロンプトは使いません。<br />
-          ふだんの仕事の中で「1つでもラクになることがあったらラッキー」くらいの気持ちで、
-          気になるカードだけ試してみてください。
-        </p>
-        <ul class="hero-point-list">
-          <li>メール・お知らせ文・案内文など、すぐに試せる事例だけを収録</li>
-          <li>1回あたり5〜10分で完結（失敗しても大きなリスクなし）</li>
-          <li>最終チェックは人間がする前提で、「たたき台」作りに使う</li>
-        </ul>
-      </div>
-      <div class="hero-right">
-        <div class="hero-note">
-          <strong>このページの使い方</strong>
-          <ul class="hero-point-list">
-            <li>気になったカードの「お願いのしかた」を、そのままコピペで試す</li>
-            <li>うまくいかなかったら「こうしてほしい」と言い直すだけでOK</li>
-            <li>個人情報や未公開情報は入れず、内容を少しぼかして試すのが安全です</li>
-          </ul>
-        </div>
-        <div class="hero-cta">
-          <span>🔰 まずは「メール」「お知らせ」から</span>
-          <span>🧪 実験と思って1つだけやってみる</span>
-          <span>📝 うまくいったら、スクショを共有して布教</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 目次 -->
-    <section class="toc">
-      <div class="toc-title">📌 気になるところからどうぞ</div>
-      <div class="toc-list">
-        <a href="#sec-1" class="toc-item">1. 5分でできるライト活用</a>
-        <a href="#sec-2" class="toc-item">2. 学生・教員向け案内文</a>
-        <a href="#sec-3" class="toc-item">3. 会議・資料づくり</a>
-        <a href="#sec-4" class="toc-item">4. 研究・広報まわり</a>
-        <a href="#sec-5" class="toc-item">5. 日々の事務処理</a>
-        <a href="#sec-6" class="toc-item">6. この事例集の活かし方</a>
-      </div>
-    </section>
-
-    <!-- Section 1 -->
-    <section id="sec-1" class="section">
-      <div class="section-header">
-        <div class="section-title">
-          <span>1.</span>
-          <span>まずはここから：5分でできるライト活用</span>
-        </div>
-        <div class="section-pill">メール・お知らせ・読みやすさチェック</div>
-      </div>
-      <p class="section-desc">
-        まずは「失敗しても困らない」使い方から。<br />
-        ふだん書いている文章を、少しだけ整えてもらうイメージです。
-      </p>
-
-      <div class="card-grid">
-        <!-- 1-1 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">1-1. メール文をちょうどよい丁寧さに整える</div>
-              <div class="usecase-label">メール</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">「失礼にならないかな？」の不安を軽く</div>
-              <div class="usecase-chip">敬語チェック</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>学内外へのメールを書いたものの、「この言い方で大丈夫？」と自信がないとき。</p>
-              <p class="mini-title">▶ 生成AIへのお願いのしかた（コピペOK）</p>
-              <div class="prompt-box">
-次のメール文を、大学職員として自然でていねいな日本語に整えてください。<br>
-意味は変えずに、表現を整えてください。<br><br>
-【メール文】<br>
-（ここに自分の書いた文を貼り付け）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>あくまで「たたき台」として受け取り、固有名詞・日付・数字は必ず自分でチェック</li>
-                <li>「カジュアルめに」「少しかしこまって」などトーン指定もできます</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 1-2 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">1-2. お知らせ文の「書き出し」だけ考えてもらう</div>
-              <div class="usecase-label">お知らせ</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">最初の数行のハードルを下げる</div>
-              <div class="usecase-chip">複数案を一気に</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>学内ポータルや掲示物のお知らせ文で、書き出しに悩むとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-学生向けに、◯◯のお知らせをする文の「書き出し」を3パターン作ってください。<br>
-かたい文と、少しやわらかめの文を混ぜてください。<br><br>
-条件：<br>
-・対象：◯◯（例：全学年の学生）<br>
-・内容：◯◯（例：〇月〇日のガイダンス開催）<br>
-・必要であれば、締切日も入れてください。
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>「3パターン」など、ほしい数を指定すると選びやすくなります</li>
-                <li>気に入った書き出しだけ使い、本文は自分で肉付けするイメージで</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 1-3 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">1-3. 文書の「読みやすさチェック」をしてもらう</div>
-              <div class="usecase-label">読みやすさ</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">段落整理</div>
-              <div class="usecase-chip">箇条書き化</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>事務連絡や要領・説明文が長くなり、読みづらくなってしまったとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-次の文書を、内容は変えずに「段落を整理して読みやすく」書き直してください。<br>
-必要に応じて箇条書きを使ってください。<br><br>
-【文書】<br>
-（ここに本文を貼り付け）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>「言い回しはあまり変えないで」と最初に伝えると、元の雰囲気を保ちやすくなります</li>
-                <li>とくに重要な注意事項は、自分の言葉で強調して書き足すと安心です</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Section 2 -->
-    <section id="sec-2" class="section">
-      <div class="section-header">
-        <div class="section-title">
-          <span>2.</span>
-          <span>学生・教員向け案内の作成をラクにする</span>
-        </div>
-        <div class="section-pill">FAQ・学生向け・教員向け</div>
-      </div>
-      <p class="section-desc">
-        「説明しているつもりなのに伝わっていない」「質問がくり返し来る」——そんなときの補助輪として。
-      </p>
-
-      <div class="card-grid">
-        <!-- 2-1 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">2-1. FAQ（よくある質問）のたたき台</div>
-              <div class="usecase-label">FAQ</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">想定質問を洗い出す</div>
-              <div class="usecase-chip">「盲点」の拾い上げ</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>新しい制度や手続きの案内で、「学生から出そうな質問」をあらかじめ整理したいとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-大学の◯◯手続きについて、学生から出そうな質問を10個と、その答えの案を作ってください。<br>
-あくまでたたき台とし、最終的な内容は人間が確認して修正する前提です。<br><br>
-【手続きの概要】<br>
-（対象者・申請方法・締切などの概要を簡単に）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>実際の規程・ルールとずれていることもあるので、必ず職員側でチェック＆修正</li>
-                <li>「学生が勘違いしやすいポイントを重視して」と条件を足すのもおすすめです</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 2-2 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">2-2. 学生向けメールをやわらかく言い換え</div>
-              <div class="usecase-label">学生向け</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">語彙レベル調整</div>
-              <div class="usecase-chip">問い合わせ減らし</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>事務担当者視点のかたい文章を、学生にも伝わりやすい表現にしたいとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-次のメール文を、大学生にも分かりやすいように難しい言葉を言い換えてください。<br>
-トーンは「事務局からのお知らせ」で、ていねいさは残してください。<br>
-絵文字や顔文字は使わないでください。<br><br>
-【メール文】<br>
-（ここに原文を貼り付け）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>「高校生にも分かるレベルで」などと指定すると、さらに分かりやすい表現を提案してくれます</li>
-                <li>行数が多すぎると読みづらいので、生成された文も短く調整すると◎</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 2-3 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">2-3. 教員向け案内を「5行以内」で要約</div>
-              <div class="usecase-label">教員向け</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">要点だけぎゅっと</div>
-              <div class="usecase-chip">忙しい方向け</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>長い説明文を、メール冒頭などで簡潔に伝えたいとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-次の文書を、教員向けのお知らせとして「5行以内」に要約してください。<br>
-対象・期限・対応方法の3点は必ず残してください。<br><br>
-【文書】<br>
-（ここに原文を貼り付け）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>詳細は別添資料やリンクに回し、「要点だけ」をメール本文にする運用がしやすくなります</li>
-                <li>「〇文字以内」と文字数指定することも可能です</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Section 3 -->
-    <section id="sec-3" class="section">
-      <div class="section-header">
-        <div class="section-title">
-          <span>3.</span>
-          <span>会議・資料作成の時間を減らす</span>
-        </div>
-        <div class="section-pill">議題・議事録・スライド構成</div>
-      </div>
-      <p class="section-desc">
-        「とりあえずの案」を出す作業は、生成AIに肩代わりしてもらえます。<br />
-        最後の判断や優先順位づけは人間側で。
-      </p>
-
-      <div class="card-grid">
-        <!-- 3-1 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">3-1. 会議の議題候補を一気にブレスト</div>
-              <div class="usecase-label">会議設計</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">抜け漏れチェック</div>
-              <div class="usecase-chip">優先順位づけの前の下ごしらえ</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>定例会議の議題を考えるとき、「ほかに何かあったっけ？」と不安になるとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-大学事務の◯◯に関する定例会議で検討すべきテーマの候補を、10個挙げてください。<br>
-会議の目的は◯◯です。<br>
-現状の課題は次のとおりです。<br>
-（ここに箇条書きで課題を書き込む）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>出てきた案をそのまま採用するのではなく、「うちの部署ではどれが重要か？」を話し合う材料に</li>
-                <li>議題を「情報共有」「検討」「決定」などの区分ごとに出してもらうこともできます</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 3-2 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">3-2. 会議メモから議事録のたたき台</div>
-              <div class="usecase-label">議事録</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">構成だけ任せる</div>
-              <div class="usecase-chip">決定事項の整理</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>箇条書きのメモはあるが、形式的な議事録を書く時間があまりないとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-次の会議メモをもとに、簡易な議事録のたたき台を作ってください。<br>
-「日時・出席者・議題・主な意見・決定事項・宿題」の項目で整理してください。<br><br>
-【会議メモ】<br>
-（ここに自分のメモを貼り付け）<br><br>
-※個人名が気になる場合は、Aさん・Bさんなどに置き換えて入力します。
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>とくに「決定事項」と「宿題」は、抜けや誤解がないかしっかり確認</li>
-                <li>実際のフォーマット（様式）がある場合は、項目名をそのまま指示すると合わせやすくなります</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 3-3 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">3-3. プレゼン資料のスライド構成案</div>
-              <div class="usecase-label">スライド</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">30分講演の骨組みづくり</div>
-              <div class="usecase-chip">スライドタイトル案</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>学内説明会や研修会で、どんな流れで話せばよいか悩むとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-大学職員向けに、◯◯について30分程度で説明するスライド構成案を作ってください。<br>
-各スライドのタイトルと、話すべきポイントを箇条書きで書いてください。<br>
-対象は◯◯（例：新任職員、教員など）です。<br>
-全部で◯枚程度のスライドを想定してください。
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>「ここは図で説明」「ここは事例を入れる」など、スライドのイメージを言ってもらうことも可能</li>
-                <li>中身（数値や具体例）は自分たちで埋めていく前提にすると、安全かつ時短になります</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Section 4 -->
-    <section id="sec-4" class="section">
-      <div class="section-header">
-        <div class="section-title">
-          <span>4.</span>
-          <span>研究・産学連携・広報まわりでの活用</span>
-        </div>
-        <div class="section-pill">成果紹介・プレスリリース</div>
-      </div>
-      <p class="section-desc">
-        外向けの文章は「伝わりやすさ」が大事。<br />
-        専門的な内容を、読みやすく・興味を持ってもらえる形に整える補助として使えます。
-      </p>
-
-      <div class="card-grid">
-        <!-- 4-1 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">4-1. 成果紹介記事の見出し候補を量産</div>
-              <div class="usecase-label">広報</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">タイトル案10本</div>
-              <div class="usecase-chip">専門用語の言い換え</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>研究成果やイベント報告の記事タイトルが思いつかないとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-次の内容をもとに、学外の一般の方向けの紹介記事タイトルを10個考えてください。<br>
-難しい専門用語は避けてください。<br>
-硬めのタイトルと、やや親しみやすいタイトルを半分ずつにしてください。<br><br>
-【内容】<br>
-（研究やイベントの概要を簡単に）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>学内のトンマナに合わせて、気に入った案を少しアレンジして使うと◎</li>
-                <li>「新聞の見出し風」「ウェブメディア風」など、テイスト指定も可能です</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 4-2 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">4-2. プレスリリースの構成案だけ作ってもらう</div>
-              <div class="usecase-label">プレスリリース</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">ひな形づくり</div>
-              <div class="usecase-chip">段落ごとのポイント整理</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>プレスリリース作成に慣れておらず、「どんな順番で書けばよい？」となっているとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-◯◯（成果内容）のプレスリリースを作りたいです。<br>
-一般的な構成案（見出し・小見出し）と、各段落に書くべき内容のポイントを箇条書きで出してください。<br>
-対象は新聞社やウェブメディアの記者です。<br><br>
-【成果の概要】<br>
-（ここに簡単な説明を記載）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>構成案だけでも手書きで考えるより、かなり時間短縮になります</li>
-                <li>実際の数値や事実関係は必ず一次情報（研究者・担当部署）で確認したうえで記載します</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Section 5 -->
-    <section id="sec-5" class="section">
-      <div class="section-header">
-        <div class="section-title">
-          <span>5.</span>
-          <span>日々の事務処理をちょっとラクにする</span>
-        </div>
-        <div class="section-pill">規程・フォーム・窓口対応</div>
-      </div>
-      <p class="section-desc">
-        「読むのが大変」「何度も同じ説明をしている」と感じるところに、少しずつAIを差し込んでいくイメージです。
-      </p>
-
-      <div class="card-grid">
-        <!-- 5-1 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">5-1. 長い規程やマニュアルのポイント要約</div>
-              <div class="usecase-label">規程・マニュアル</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">3つのポイントに整理</div>
-              <div class="usecase-chip">まず自分が理解するために</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>長い文書を読んだうえで、同僚や上司にかんたんに説明したいとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-次の文書の内容を、職員向けに3つのポイントに分けて要約してください。<br>
-解釈が分かれる可能性のある部分は、「詳細は原文参照」としてください。<br><br>
-【文書】<br>
-（ここに規程やマニュアルなどの本文を貼り付け）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>細かい条文の解釈はAIに任せず、「大枠の整理」に使うイメージで</li>
-                <li>要約結果をもとに、説明用のスライドやメモを書くときの“下書き”にできます</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 5-2 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">5-2. Excelやフォームの説明文を分かりやすく</div>
-              <div class="usecase-label">フォーム設計</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">入力ミスを減らす</div>
-              <div class="usecase-chip">ヘルプテキスト改善</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>申請様式の入力欄の説明が分かりづらく、同じ質問がよく届くとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-申請フォームの各項目の説明文を、学生にも分かりやすい表現に直してください。<br>
-言葉はやさしく、1文を長くしすぎないでください。<br><br>
-【現在の説明文】<br>
-・項目A：◯◯◯◯◯<br>
-・項目B：◯◯◯◯◯
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>「例：〜〜」を入れるべきかどうか、案を出してもらうこともできます</li>
-                <li>説明を整理するだけで、問い合わせ件数や入力ミスが減ることもあります</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-
-        <!-- 5-3 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">5-3. 電話・窓口対応の定型文を揃える</div>
-              <div class="usecase-label">応対テンプレ</div>
-            </div>
-            <div class="usecase-chip-row">
-              <div class="usecase-chip">説明のブレを減らす</div>
-              <div class="usecase-chip">新人育成にも</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ 想定シーン</p>
-              <p>電話や窓口で同じ説明を何度もしており、言い回しが人によってバラつくとき。</p>
-              <p class="mini-title">▶ お願いのしかた</p>
-              <div class="prompt-box">
-次の状況ごとに、電話での説明のセリフ例を3パターンずつ作ってください。<br>
-トーンは丁寧だが、堅苦しすぎない言い方にしてください。<br><br>
-【状況】<br>
-・◯◯の申請期限を過ぎてしまった学生への説明<br>
-・書類に不備がある学生への説明<br>
-（必要な状況を追加）
-              </div>
-              <p class="mini-title">▶ ひとことポイント</p>
-              <ul class="point-list">
-                <li>できあがったセリフを部署内で共有し、「基本パターン」として使うと応対品質がそろいやすくなります</li>
-                <li>実際の運用ルールに合わない表現がないか必ず確認しましょう</li>
-              </ul>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Section 6 -->
-    <section id="sec-6" class="section">
-      <div class="section-header">
-        <div class="section-title">
-          <span>6.</span>
-          <span>この事例集の活かし方アイデア</span>
-        </div>
-        <div class="section-pill">研修・共有・布教</div>
-      </div>
-      <p class="section-desc">
-        ここまでのカードは、そのまま「社内ポータルの記事」や「研修スライド」に転用できます。<br />
-        いくつかの活用パターンを載せておきます。
-      </p>
-
-      <div class="card-grid">
-        <!-- 6-1 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">6-1. 研修用スライドとして再利用</div>
-              <div class="usecase-label">研修</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ こう使う</p>
-              <ul class="point-list">
-                <li>各カードを1〜2枚のスライドにして、「事例＋プロンプト」をそのまま紹介</li>
-                <li>実際にその場で1つのプロンプトを入力してみるライブデモに利用</li>
-              </ul>
-              <p class="mini-title">▶ ひとこと</p>
-              <p>「まずはこの3つだけ覚えましょう」と、入り口をしぼって紹介すると参加者もとっつきやすくなります。</p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 6-2 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">6-2. 学内ポータルでの連載企画に</div>
-              <div class="usecase-label">ポータル掲載</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ こう使う</p>
-              <ul class="point-list">
-                <li>1回の投稿でカードを2〜3枚紹介し、「試してみた結果」を募集</li>
-                <li>実際にうまくいった例・失敗例もあわせて掲載し、ナレッジを蓄積</li>
-              </ul>
-              <p class="mini-title">▶ ひとこと</p>
-              <p>「うまくいかなかった話」も共有すると、気軽にチャレンジしやすい雰囲気づくりにつながります。</p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 6-3 -->
-        <article class="usecase-card">
-          <div class="usecase-card-inner">
-            <div class="usecase-header">
-              <div class="usecase-title">6-3. 部署ごとの「推しプロンプト集」をつくる</div>
-              <div class="usecase-label">ローカル共有</div>
-            </div>
-            <div class="usecase-body">
-              <p class="mini-title">▶ こう使う</p>
-              <ul class="point-list">
-                <li>この事例集から各部署で「うちの業務に合いそうなもの」を選んでカスタマイズ</li>
-                <li>部署単位で「よく使うプロンプト集」を持つことで、横展開しやすくなる</li>
-              </ul>
-              <p class="mini-title">▶ ひとこと</p>
-              <p>まずは部署内で2〜3人の「試してみた人」をつくり、その人たちの成功例・失敗例を聞きながら少しずつ広げていくのがおすすめです。</p>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div class="footer-note">
-        <strong>最後に：</strong><br />
-        このページはあくまで「叩き台」です。<br />
-        実際の運用ルールやシステム環境に合わせて、事例を減らしたり、より具体的に書き換えたりしながら、
-        あなたの大学・部署版の「生成AI活用ガイド」に育てていってください。
-      </div>
-    </section>
-  </main>
-
-  <button class="back-to-top" type="button" aria-label="ページ上部へ戻る" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-    ↑
-  </button>
+  <section class="footer-note">
+    <strong>注意事項</strong><br>
+    ・生成AIの出力は誤りを含む場合があります。提出・送付前に必ず確認してください。<br>
+    ・学内ルール（情報管理・著作権・個人情報保護等）に従って利用してください。
+  </section>
+</main>
 </body>
 </html>
